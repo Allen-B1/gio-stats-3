@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{.Username}}'s stats - GISP</title>
+        {{template "header.html"}}
+        <style>
+.chart {
+    background: whitesmoke;
+    padding: 12px;
+    margin: auto;
+    max-width: 1024px;
+    text-align: center;
+}
+svg {
+    margin: auto;
+    display: block;
+}
+.chart h2 {
+    color: #111;
+    font-size: 20px;
+}
+.chart h3 {
+    color: #777;
+    font-size: 16px;
+}
+        </style>
+    </head>
+    <body>
+        {{template "nav.html"}}
+        <hr />
+        <p>Your carefully prepared, beautifully created chart is presented below. If you can't find it, look for the color <font color="red">white</font>.</p>
+        <div class="chart">
+            <h2 align="center">{{.Username}}</h2>
+            <h3 align="center">{{.YStat}} vs {{.XStat}}</h3>
+            {{.Chart}}
+        </div>
+    </body>
+</html>

@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -276,4 +277,39 @@ func StringifyStat(stat Statistic) string {
 	} else {
 		return name + "[" + fmt.Sprint(stat) + "]"
 	}
+}
+
+func ParseStat(in string) (Statistic, error) {
+	b := strings.Index(in, "[")
+	name := in
+	if b >= 0 {
+		name = in[:b]
+	}
+	switch strings.ToLower(name) {
+	case "win":
+		return StatisticWin{}, nil
+	case "percentile", "percent":
+		return StatisticPercentile{}, nil
+	case "stars", "star", "starcount":
+		return StatisticStars{}, nil
+	case "num", "number":
+		return StatisticNumber{}, nil
+	case "date":
+		return StatisticDate{}, nil
+	case "average", "avg":
+		end := strings.Index(in, "]")
+		middle := in[b+1 : end]
+		args := strings.Split(middle, ",")
+		n, _ := strconv.Atoi(args[0])
+		if n == 0 {
+			return nil, fmt.Errorf("average[N, _] must have N > 0, but N = %v", n)
+		}
+
+		inner, err := ParseStat(args[1])
+		if err != nil {
+			return nil, fmt.Errorf("error parsing average: %w", inner)
+		}
+		return StatisticAverage{n, inner}, nil
+	}
+	return nil, fmt.Errorf("unknown stat: %s", strings.ToLower(name))
 }

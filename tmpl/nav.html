@@ -1,0 +1,14 @@
+<div class="nav-container">
+    <nav>GISP | <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">generals.io</a> | <a href="/">Home</a> | <a href="/api.html">API</a></nav>
+    <form class="nav-machine" style="text-align:center" action="/stats" method="GET">
+        Filter:<select name="type">
+            <option value="classic">FFA</option>
+            <option value="1v1">1v1</option>
+            <option value="2v2">2v2</option>
+            <option value="custom">Custom</option>
+        </select>
+        x:<input type="text" name="x" placeholder="Number" required> y:<input type="text" name="y" required placeholder="Avg[100,Percent]"><br />
+        <input type="text" name="username" required placeholder="username">
+        <button type="submit" style="background:lightgreen">Go!</button>
+    </div>
+</div>
