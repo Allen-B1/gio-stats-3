@@ -74,7 +74,7 @@ func makeLine(xdata []float64, ydata []float64, min, max [2]float64, x, y, w, h 
 
 func main() {
 	r := gin.New()
-	r.LoadHTMLFiles("tmpl/stat.html", "tmpl/header.html", "tmpl/nav.html")
+	r.LoadHTMLFiles("tmpl/stat.html", "tmpl/header.html", "tmpl/nav.html", "tmpl/home.html")
 	r.GET("/stats", func(c *gin.Context) {
 		username := c.Query("username")
 		xstr := c.Query("x")
@@ -167,6 +167,9 @@ func main() {
 		chart += "</svg>"
 
 		c.HTML(200, "stat.html", gin.H{"Username": username, "XStat": StringifyStat(xstat), "YStat": StringifyStat(ystat), "Chart": chart})
+	})
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(200, "home.html", nil)
 	})
 	r.Run()
 }
